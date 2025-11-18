@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>宇宙の神秘</title>
+  <link rel="stylesheet" href="css/ress.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/parallax.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header_top">
+      <div class="header_title">
+        <h1><a href="index.html"><img src="images/Elegant Flower Jewelry Brooch_ Heart & Rose Design - Perfect for Any Occasion!.png" alt="宇宙"></a></h1>
+      </div>
+      <nav class="header_navigation">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="#">惑星の探査</a></li>
+          <li><a href="#">星の力</a></li>
+          <li><a href="#">銀河系</a></li>
+          <li><a href="#">このサイトについて</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="main_visual">
+      <div id="slideshow">
+        <img src="images/Star Wars Wallpaper For PC Free Download.jpg" alt="宇宙の神秘" class="active">
+        <img src="images/ -7.jpg" alt="星雲">
+        <img src="images/ -8.jpg" alt="銀河">
+        <img src="images/ -13.jpg" alt="惑星">
+      </div>
+    </div>
+
+    <article>
+
+      <section class="first content">
+        <div class="content_area">
+          <h2>宇宙の知識</h2>
+          <img src="images 2/Galaxy.jpg" alt="星雲">
+          <p>私たちが住む宇宙は、138億年前のビッグバンから始まりました。無数の銀河、星、惑星が存在し、その中で地球は生命を育む奇跡の惑星です。宇宙には暗黒物質や暗黒エネルギーなど、まだ解明されていない謎がたくさんあります。人類は宇宙探査を通じて、宇宙の起源や生命の可能性を探り続けています。そんな宇宙の神秘的な知識をご紹介します。</p>
+        </div>
+      </section>
+
+      <section class="second content">
+        <div class="content_area">
+          <h2>星がいっぱい！</h2>
+          <p>宇宙には約2兆個の銀河が存在し、それぞれに数千億個の星があります。私たちの太陽系は天の川銀河の端に位置し、8つの惑星と無数の小惑星、彗星が太陽の周りを回っています。夜空を見上げると見える星々は、実際には何光年も離れた巨大な恒星です。このサイトでは太陽系の惑星から遠い銀河まで、宇宙の多様性を厳選してご紹介します。</p>
+        </div>
+      </section>
+
+      <section class="third content">
+        <div class="content_area">
+          <h2>宇宙といっしょ！</h2>
+          <p>宇宙探査は人類の夢から始まりました。アポロ計画で月に到達し、ボイジャー探査機は太陽系の果てまで旅を続けています。国際宇宙ステーションでは宇宙飛行士が宇宙で生活し、火星探査機は生命の痕跡を探しています。宇宙は遠い存在ではなく、私たちの日常に影響を与えています。宇宙の壮大なスケールから学び、地球の美しさを再発見しましょう！</p>
+        </div>
+      </section>
+
+      <section class="last content">
+        <div class="last_body">
+          <h2>宇宙の神秘</h2>
+          <p>by Universe Explorer</p>
+        </div>
+      </section>
+
+    </article>
+
+    <footer class="footer_top">
+      <nav class="footer_navigation">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="#">惑星の探査</a></li>
+          <li><a href="#">星の力</a></li>
+          <li><a href="#">銀河系</a></li>
+          <li><a href="#">このサイトについて</a></li>
+        </ul>
+      </nav>
+      <small>(C) 2024 Universe Explorer</small>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript">
+    function slideSwitch() {
+      var $active = $('#slideshow IMG.active');
+      if ($active.length == 0) $active = $('#slideshow IMG:last');
+      var $next = $active.next().length ? $active.next()
+        : $('#slideshow IMG:first');
+      $active.addClass('last-active');
+      $next.css({ opacity: 0.0 })
+        .addClass('active')
+        .animate({ opacity: 1.0 }, 1000, function () {
+          $active.removeClass('active last-active');
+        });
+    }
+
+    $(function () {
+      setInterval("slideSwitch()", 3000);
+    });
+  </script>
+
+</body>
+
+</html>
