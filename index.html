@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>気分ジュークボックス Mood Player</title>
+    <meta name="description" content="曲を選ぶんじゃなくて、気分を選ぶ。リラックス、失恋、アガりたい、静かに過ごしたい。気分を選んで、あとはおまかせ。" />
+    <link rel="preconnect" href="https://samplelib.com" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="bg">
+      <canvas id="bgCanvas" class="bg__canvas" aria-hidden="true"></canvas>
+      <div class="bg__overlay" aria-hidden="true"></div>
+    </div>
+
+    <main class="app">
+      <header class="topbar">
+        <div class="brand" aria-label="気分ジュークボックス">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span class="brand__name">気分ジュークボックス</span>
+          <span class="brand__sub">Mood Player</span>
+        </div>
+
+        <div class="topbar__actions">
+          <button id="shareBtn" class="btn btn--ghost" type="button" title="今の気分のリンクをコピー">
+            リンクをコピー
+          </button>
+          <button id="resetBtn" class="btn btn--ghost" type="button" title="気分選択に戻る">
+            気分を変える
+          </button>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div id="burst" class="burst" aria-hidden="true"></div>
+        <div class="deck" aria-label="Mood Player 再生パネル">
+          <div class="deck__left">
+            <div id="pickLeft" class="view view--active" aria-label="気分リストを選ぶ">
+            </div>
+
+            <div id="playerLeft" class="view" aria-label="選んだ気分のプレイリスト">
+              <div class="listHead">
+                <div class="listHead__label">Playlist</div>
+                <div class="listHead__sub" id="playlistSub">Mood playlist</div>
+              </div>
+              <div id="trackList" class="list" role="list"></div>
+            </div>
+          </div>
+
+          <div class="deck__right">
+            <div id="pickRight" class="view view--active">
+              <div class="indexTopNav">
+                <div class="indexBrand">Mood Player</div>
+                <div class="indexNav">
+                  <span>ARTISTS</span>
+                  <span>MIXTAPES</span>
+                  <span>AWARDS</span>
+                </div>
+              </div>
+
+              <div class="indexHero">
+                <div class="indexTitle">MOOD<br />PLAYER</div>
+                <div class="indexGenres">RELAX, HEARTBREAK, HYPE, QUIET</div>
+              </div>
+
+              <div class="indexSection">
+                <div class="indexSection__head">POPULAR</div>
+
+                <div class="indexList" role="list">
+                  <button class="moodCard indexRow" type="button" data-mood="relax" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--relax" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">リラックス</div>
+                      <div class="indexRow__sub">chill / lofi</div>
+                    </div>
+                  </button>
+
+                  <button class="moodCard indexRow" type="button" data-mood="heartbreak" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--heartbreak" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">失恋</div>
+                      <div class="indexRow__sub">slow / r&b</div>
+                    </div>
+                  </button>
+
+                  <button class="moodCard indexRow" type="button" data-mood="hype" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--hype" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">アガりたい</div>
+                      <div class="indexRow__sub">edm / trap</div>
+                    </div>
+                  </button>
+
+                  <button class="moodCard indexRow" type="button" data-mood="quiet" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--quiet" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">静かにしたい</div>
+                      <div class="indexRow__sub">piano / ambient</div>
+                    </div>
+                  </button>
+
+                  <button class="moodCard indexRow" type="button" data-mood="love" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--love" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">恋</div>
+                      <div class="indexRow__sub">city pop / ballad</div>
+                    </div>
+                  </button>
+
+                  <button class="moodCard indexRow" type="button" data-mood="fun" role="listitem">
+                    <div class="indexRow__cover indexRow__cover--fun" aria-hidden="true"></div>
+                    <div class="indexRow__meta">
+                      <div class="indexRow__title">楽し</div>
+                      <div class="indexRow__sub">pop / dance</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="playerRight" class="view" aria-label="曲の詳細と操作">
+              <div class="detail">
+                <div class="cover" id="cover" aria-label="ジャケットプレビュー">
+                  <div class="cover__shine" aria-hidden="true"></div>
+                </div>
+                <div class="detail__meta">
+                  <div class="detail__artist" id="detailArtist">Mood Player</div>
+                  <div class="detail__album" id="detailAlbum">Album: Mood Session</div>
+                  <div class="detail__row">
+                    <span class="tag" id="moodTag">😌 リラックス</span>
+                    <span class="detail__sep">·</span>
+                    <span class="detail__time" id="detailTime">—</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="now now--tight">
+                <div class="now__title" id="trackTitle">読み込み中…</div>
+                <div class="now__copy" id="moodCopy">肩の力を抜いて、まずは深呼吸。</div>
+              </div>
+
+              <div class="playerBar">
+                <button id="shuffleBtn" class="btn btn--icon" type="button" title="随机" aria-label="随机">🔀</button>
+                <button id="prevBtn" class="btn btn--icon" type="button" title="上一首" aria-label="上一首">⏮</button>
+                <button id="playBtn" class="btn btn--primary" type="button">▶ 再生</button>
+                <button id="nextBtn" class="btn btn--icon" type="button" title="下一首" aria-label="下一首">⏭</button>
+                <button id="repeatBtn" class="btn btn--icon" type="button" title="循环" aria-label="循环">🔁</button>
+                <div class="volumeWrap">
+                  <button id="volumeMute" class="btn btn--icon" type="button" title="静音" aria-label="音量">🔊</button>
+                  <input id="volumeSlider" type="range" min="0" max="100" value="100" title="音量" aria-label="音量" />
+                </div>
+                <button id="chatBtn" class="btn btn--icon btn--chat" type="button" title="与同听这首歌的人聊天（需有人同时收听）" disabled>💬 Chat</button>
+                <button id="backBtn" class="btn btn--back" type="button" title="返回选心情">← 返回选心情</button>
+              </div>
+
+              <div id="chatPanel" class="chatPanel" aria-hidden="true">
+                <div class="chatPanel__head">
+                  <span class="chatPanel__title">同听这首歌的人</span>
+                  <button id="chatClose" class="btn btn--icon" type="button" aria-label="关闭">✕</button>
+                </div>
+                <div id="chatMessages" class="chatPanel__messages" role="log"></div>
+                <div class="chatPanel__inputWrap">
+                  <input id="chatInput" type="text" placeholder="说点什么…" maxlength="500" autocomplete="off" />
+                  <button id="chatSend" class="btn btn--primary" type="button">发送</button>
+                </div>
+              </div>
+
+              <div class="progress progress--wide" aria-label="再生状況">
+                <div id="progressBar" class="progress__bar" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+                  <div id="progressInner" class="progress__inner"></div>
+                </div>
+                <div class="progress__meta">
+                  <span id="timeNow">0:00</span>
+                  <span id="timeDur">0:00</span>
+                </div>
+              </div>
+
+              <audio id="audio" preload="auto"></audio>
+            </div>
+          </div>
+
+          <div class="vinyl" aria-hidden="true">
+            <div class="vinyl__disc">
+              <div class="vinyl__label"></div>
+              <div class="vinyl__hole"></div>
+            </div>
+            <div class="vinyl__arm"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span class="muted">UI/UX デモ用の小さなおもちゃ：気分を選ぶ → 曲を流す → 雰囲気を変える</span>
+      </footer>
+    </main>
+
+    <script>
+      window.MOOD_PLAYER_SUPABASE = {
+        url: "https://nlavqjsztdfxksjusyky.supabase.co",
+        anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sYXZxanN6dGRmeGtzanVzeWt5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzU1MDcsImV4cCI6MjA4NTc1MTUwN30.moPoq8daEdww89UYhYX0JJA8XpwT1CqKPXxJq8k7b54"
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
